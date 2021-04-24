@@ -17,6 +17,7 @@ namespace LD48
         public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize) {
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            ApplyPhysics(gameTime);
             if (keyboardState.IsKeyDown(Keys.Up))
             {
                 position.Y -= speed * dt;
@@ -58,6 +59,10 @@ namespace LD48
             {
                 position.Y = texture.Height / 2;
             }
+        public void ApplyPhysics(GameTime gameTime) {
+            // TODO: Make better
+            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position.Y += 1;
         }
     }
 }
