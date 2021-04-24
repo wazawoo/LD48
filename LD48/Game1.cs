@@ -24,7 +24,7 @@ namespace LD48
         {
             // TODO: Add your initialization logic here
             _graphics.PreferredBackBufferWidth = 500;
-            _graphics.PreferredBackBufferWidth = 500;
+            _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
             ballPosition = new Vector2(
