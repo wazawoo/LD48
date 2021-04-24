@@ -12,10 +12,8 @@ namespace LD48
         readonly float scaleFactor = 2f;
         Matrix scaleTransormation;
 
-        //player
-        Texture2D playerTexture;
-        Vector2 playerPosition;
-        float playerSpeed;
+        //entities
+        Player player;
 
         //output
         private GraphicsDeviceManager graphics;
@@ -24,6 +22,7 @@ namespace LD48
         //input
         private KeyboardState keyboardState;
 
+        //init
         public TheDeep7()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -45,11 +44,13 @@ namespace LD48
             graphics.ApplyChanges();
 
             //player init
-            playerPosition = new Vector2(
-                gameScreenSize.X / 2,
-                gameScreenSize.Y / 2
-            );
-            playerSpeed = 100f;
+            player = new Player(
+                position: new Vector2(
+                    gameScreenSize.X / 2,
+                    gameScreenSize.Y / 2
+                    ),
+                speed: 100f
+                );
 
             base.Initialize();
         }
@@ -60,7 +61,10 @@ namespace LD48
 
             // TODO: use this.Content to load your game content here
 
-            playerTexture = Content.Load<Texture2D>("player");
+            //load entity data
+
+            //load player data
+            player.texture = Content.Load<Texture2D>("player");
         }
 
         protected override void Update(GameTime gameTime)
@@ -74,37 +78,10 @@ namespace LD48
             keyboardState = Keyboard.GetState();
 
             //update entities
+            //... movement, collision
 
-            var kstate = Keyboard.GetState();
-            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (kstate.IsKeyDown(Keys.Up)) {
-                playerPosition.Y -= playerSpeed * dt;
-            }
-
-            if (kstate.IsKeyDown(Keys.Down)) {
-                playerPosition.Y += playerSpeed * dt;
-            }
-
-            if (kstate.IsKeyDown(Keys.Left))
-                playerPosition.X -= playerSpeed * dt;
-
-            if (kstate.IsKeyDown(Keys.Right))
-                playerPosition.X += playerSpeed * dt;
-
-            var width = gameScreenSize.X;
-            var height = gameScreenSize.Y;
-
-            // restrict to bounds
-            if (playerPosition.X > width - playerTexture.Width / 2)
-                playerPosition.X = width - playerTexture.Width / 2;
-            else if (playerPosition.X < playerTexture.Width / 2)
-                playerPosition.X = playerTexture.Width / 2;
-
-            if (playerPosition.Y > height - playerTexture.Height / 2)
-                playerPosition.Y = height - playerTexture.Height / 2;
-            else if (playerPosition.Y < playerTexture.Height / 2)
-                playerPosition.Y = playerTexture.Height / 2;
+            //update player
+            player.Update(gameTime, keyboardState, gameScreenSize);
 
             base.Update(gameTime);
         }
@@ -125,17 +102,10 @@ namespace LD48
                 scaleTransormation
             );
 
-            spriteBatch.Draw(
-                playerTexture,
-                playerPosition,
-                null,
-                Color.White,
-                0f,
-                new Vector2(playerTexture.Width / 2, playerTexture.Height / 2),
-                Vector2.One,
-                SpriteEffects.None,
-                0f
-            );
+            //draw entities
+
+            //draw player
+            player.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 
