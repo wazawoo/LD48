@@ -9,11 +9,14 @@ namespace LD48
         //game size and scale
         Vector2 gameScreenSize = new Vector2(320, 240);
         Vector2 tileSize = new Vector2(10, 10);
+
         readonly float scaleFactor = 2f;
         Matrix scaleTransormation;
 
         //entities
         Player player;
+
+        TileSet tileSet;
 
         //output
         private GraphicsDeviceManager graphics;
@@ -39,9 +42,15 @@ namespace LD48
             // TODO: Add your initialization logic here
 
             //graphics init
-            graphics.PreferredBackBufferWidth = (int)(gameScreenSize.X * scaleFactor);
-            graphics.PreferredBackBufferHeight = (int)(gameScreenSize.Y * scaleFactor);
+            graphics.PreferredBackBufferWidth = (int) (gameScreenSize.X * scaleFactor);
+            graphics.PreferredBackBufferHeight = (int) (gameScreenSize.Y * scaleFactor);
             graphics.ApplyChanges();
+
+            //tiles init (set size, then set tiles
+            var width =  (int) (gameScreenSize.X / tileSize.X);
+            var height = (int) (gameScreenSize.Y / tileSize.Y);
+
+            tileSet = new TileSet(tileSize, width, height);
 
             //player init
             player = new Player(
@@ -61,6 +70,10 @@ namespace LD48
 
             // TODO: use this.Content to load your game content here
 
+            //load tiles
+            var tileTexture = Content.Load<Texture2D>("tile");
+            tileSet.LoadTiles(tileTexture);
+
             //load entity data
 
             //load player data
@@ -77,8 +90,9 @@ namespace LD48
             //grab input
             keyboardState = Keyboard.GetState();
 
+            //update tiles
+
             //update entities
-            //... movement, collision
 
             //update player
             player.Update(gameTime, keyboardState, gameScreenSize);
@@ -101,6 +115,9 @@ namespace LD48
                 null,
                 scaleTransormation
             );
+
+            //draw tiles
+            tileSet.Draw(gameTime, spriteBatch);
 
             //draw entities
 
