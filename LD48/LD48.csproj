@@ -31,5 +31,6 @@
     <Folder Include="Game\Util\" />
     <Folder Include="Game\Entities\" />
     <Folder Include="Game\Tiles\" />
+    <Folder Include="Game\Physics\" />
   </ItemGroup>
 </Project>
