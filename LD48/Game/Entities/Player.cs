@@ -6,18 +6,26 @@ namespace LD48
 {
     public class Player: Entity
     {
+        public JumpPhysics jump;
         public Player(
             Vector2 position,
             float speed)
             : base(position, speed)
         {
             //...
+            jump = new JumpPhysics();
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize) {
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             ApplyPhysics(gameTime);
+
+            if (jump.isActive)
+            {
+                position.Y -= jump.getJumpY();
+            }
+
             if (keyboardState.IsKeyDown(Keys.Up))
             {
                 position.Y -= speed * dt;
@@ -36,6 +44,11 @@ namespace LD48
             if (keyboardState.IsKeyDown(Keys.Right))
             {
                 position.X += speed * dt;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                if (isOnGround) { jump.start(); }
             }
 
             var width = gameScreenSize.X;
