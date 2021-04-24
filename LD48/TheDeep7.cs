@@ -58,7 +58,7 @@ namespace LD48
                     gameScreenSize.X / 2,
                     gameScreenSize.Y / 2
                     ),
-                speed: 100f
+                speed: 50f
                 );
 
             base.Initialize();

@@ -7,12 +7,14 @@ namespace LD48
     public class Player: Entity
     {
         public JumpPhysics jump;
+        public bool isOnGround;
+
         public Player(
             Vector2 position,
             float speed)
             : base(position, speed)
         {
-            //...
+            isOnGround = false;
             jump = new JumpPhysics();
         }
 
@@ -64,14 +66,20 @@ namespace LD48
                 position.X = texture.Width / 2;
             }
 
-            if (position.Y > height - texture.Height / 2)
+            if (position.Y >= height - texture.Height / 2)
             {
                 position.Y = height - texture.Height / 2;
+                // right now this will always be true until we add collision
+                // checking.
+                isOnGround = true;
             }
             else if (position.Y < texture.Height / 2)
             {
                 position.Y = texture.Height / 2;
-            }
+            } 
+
+        }
+
         public void ApplyPhysics(GameTime gameTime) {
             // TODO: Make better
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
