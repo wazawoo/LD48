@@ -58,17 +58,28 @@ namespace LD48
             var height = gameScreenSize.Y;
 
             // restrict to bounds
+
+            //allow continuing to the other side
             if (position.X > width - texture.Width / 2)
             {
-                position.X = width - texture.Width / 2;
+                //amount we are off screen
+                var dx = position.X - (width - texture.Width / 2);
+
+                //right
+                position.X = dx;
             }
             else if (position.X < texture.Width / 2)
             {
-                position.X = texture.Width / 2;
+                //amount we are off screen
+                var dx = texture.Width / 2 - position.X;
+
+                //left
+                position.X = width - dx;
             }
 
             if (position.Y >= height - texture.Height / 2)
             {
+                //bottom
                 position.Y = height - texture.Height / 2;
                 // right now this will always be true until we add collision
                 // checking.
@@ -76,6 +87,7 @@ namespace LD48
             }
             else if (position.Y < texture.Height / 2)
             {
+                //top
                 position.Y = texture.Height / 2;
             }
 
