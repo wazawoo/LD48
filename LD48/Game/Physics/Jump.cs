@@ -17,8 +17,8 @@ namespace LD48
         public JumpPhysics()
         {
             height = 0;
-            maxJumpHeight = 90;
-            heightIncrement = 10;
+            maxJumpHeight = 50;
+            heightIncrement = 6;
             isActive = false;
             isFalling = false;
         }
@@ -39,6 +39,18 @@ namespace LD48
         {
             if (height < maxJumpHeight)
             {
+
+                if (height > 25)
+                {
+                    heightIncrement = 2;
+                } else if (height > 10)
+                {
+                    heightIncrement = 4;
+                } else
+                {
+                    heightIncrement = 6;
+                }
+
                 height += heightIncrement;
                 return heightIncrement;
             }
