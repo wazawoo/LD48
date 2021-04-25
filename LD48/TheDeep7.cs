@@ -61,7 +61,7 @@ namespace LD48
                     gameScreenSize.X / 2,
                     gameScreenSize.Y / 2
                     ),
-                speed: 50f
+                speed: 100f
                 );
 
             dog = new Dog(

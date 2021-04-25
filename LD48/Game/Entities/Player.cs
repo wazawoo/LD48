@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -76,8 +77,11 @@ namespace LD48
             else if (position.Y < texture.Height / 2)
             {
                 position.Y = texture.Height / 2;
-            } 
+            }
 
+            //test: round to nearest pixel
+            position.X = (float) Math.Round(position.X);
+            position.Y = (float) Math.Round(position.Y);
         }
 
         public void ApplyPhysics(GameTime gameTime) {
