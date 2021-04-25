@@ -12,7 +12,7 @@ namespace LD48
         Vector2 gameScreenSize = new Vector2(320, 240);
         Vector2 tileSize = new Vector2(10, 10);
 
-        readonly float scaleFactor = 2f;
+        readonly float scaleFactor = 3f;
         Matrix scaleTransormation;
 
         //entities
@@ -123,7 +123,7 @@ namespace LD48
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 null,
-                null,
+                SamplerState.PointClamp,
                 null,
                 null,
                 null,
