@@ -36,13 +36,13 @@ namespace LD48
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                position.Y -= speed * dt;
+                //position.Y -= speed * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Down))
             {
                 
-                position.Y += speed * dt;
+                //position.Y += speed * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
