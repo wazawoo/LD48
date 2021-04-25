@@ -84,5 +84,14 @@ namespace LD48
                 }
             }
         }
+
+        public TileType getType(float xFloat, float yFloat)
+        {
+            var x = (xFloat / 10);
+            var y = (yFloat / 10);
+            if (y > 23) { return TileType.Air;  }
+            var tile = tiles[(int)x, (int)y];
+            return tile.type;
+        }
     }
 }
