@@ -20,6 +20,13 @@ namespace LD48
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize) {
+        public enum Direction
+        {
+            Up = 0,
+            Right = 1,
+            Down = 2,
+            Left = 3
+        }
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             ApplyPhysics(gameTime);
