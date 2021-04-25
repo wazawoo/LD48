@@ -19,7 +19,6 @@ namespace LD48
             jump = new JumpPhysics();
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize) {
         public enum Direction
         {
             Up = 0,
@@ -27,14 +26,13 @@ namespace LD48
             Down = 2,
             Left = 3
         }
+
+        public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize, TileSet tileSet) {
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            ApplyPhysics(gameTime);
 
-            if (jump.isActive)
-            {
-                position.Y -= jump.getJumpY();
-            }
+            ApplyPhysics(gameTime, tileSet);
+            
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
@@ -43,22 +41,38 @@ namespace LD48
 
             if (keyboardState.IsKeyDown(Keys.Down))
             {
+                
                 position.Y += speed * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                position.X -= speed * dt;
+                var collidable = checkIfCollidable(tileSet, position, Direction.Left);
+                if (!collidable)
+                {
+                    position.X -= speed * dt;
+                }
             }
 
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                position.X += speed * dt;
+                var collidable = checkIfCollidable(tileSet, position, Direction.Right);
+                if (!collidable)
+                {
+                    position.X += speed * dt;
+                }
             }
 
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                if (isOnGround) { jump.start(); }
+                if (isOnGround) {
+                    var collidable = checkIfCollidable(tileSet, position, Direction.Up);
+                    if (!collidable)
+                    {
+                        position.Y -= jump.getJumpY();
+                        jump.start();
+                    }
+                }
             }
 
             var width = gameScreenSize.X;
@@ -96,7 +110,9 @@ namespace LD48
             {
                 //top
                 position.Y = texture.Height / 2;
-            }
+            } 
+
+        }
         public bool checkIfCollidable(TileSet tileSet, Vector2 position, Direction direction)
         {
 
