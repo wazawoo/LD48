@@ -90,10 +90,33 @@ namespace LD48
                 //top
                 position.Y = texture.Height / 2;
             }
+        public bool checkIfCollidable(TileSet tileSet, Vector2 position, Direction direction)
+        {
 
-            //test: round to nearest pixel
-            position.X = (float) Math.Round(position.X);
-            position.Y = (float) Math.Round(position.Y);
+            var allTiles = tileSet.tiles;
+
+            // Get players position
+            var playerPositionX = position.X;
+            var playerPositionY = position.Y;
+
+            // Get coordinate of next direction
+            if (direction == Direction.Up)      { playerPositionY = position.Y - 5;}
+            if (direction == Direction.Down)    { playerPositionY = position.Y + 5; }
+            if (direction == Direction.Left)    { playerPositionX = position.X - 5; }
+            if (direction == Direction.Right)   { playerPositionX = position.X + 5; }
+
+            // Get the tile type of the next coordinate
+            var x = (playerPositionX);
+            var y = (playerPositionY);
+            var type = tileSet.getType(x, y);
+
+            if (type == TileType.Ground)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
 
         public void ApplyPhysics(GameTime gameTime) {
