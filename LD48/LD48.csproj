@@ -32,5 +32,6 @@
     <Folder Include="Game\Entities\" />
     <Folder Include="Game\Tiles\" />
     <Folder Include="Game\Physics\" />
+    <Folder Include="Content\Levels\" />
   </ItemGroup>
 </Project>

@@ -1,20 +1,24 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace LD48
 {
     public class TileSet
     {
-        Vector2 tileSize;
         int width;
         int height;
         public Tile[,] tiles;
 
-        public TileSet(Vector2 tileSize, int width, int height)
+        public TileSet(
+            Vector2 tileSize,
+            int width,
+            int height)
         {
-            this.tileSize = tileSize;
             this.width = width;
             this.height = height;
 
@@ -29,13 +33,43 @@ namespace LD48
             }
         }
 
-        public void LoadTiles(Texture2D texture)
+        public void LoadTiles(
+            IServiceProvider serviceProvider,
+            Stream fileStream)
         {
+            var content = new ContentManager(serviceProvider, "Content");
+
+            List<string> lines = new List<string>();
+            using (StreamReader reader = new StreamReader(fileStream))
+            {
+                string line = reader.ReadLine();
+                while (line != null)
+                {
+                    lines.Add(line);
+                    if (line.Length != width)
+                        throw new Exception(String.Format("The length of line {0} is incorrect.", lines.Count));
+                    line = reader.ReadLine();
+                }
+            }
+
+            if (lines.Count != height)
+                throw new Exception(String.Format("Got {0} lines, expected {1}", lines.Count, height));
+
+            //only load tile textures once
+            var textures = new Texture2D[2];
+            for (int i = 0; i < textures.Length; ++i)
+            {
+                string path = String.Format("Tiles/tile{0}", i + 1);
+                textures[i] = content.Load<Texture2D>(path);
+            }
+
+            // Loop over every tile position,
             for (int y = 0; y < height; ++y)
             {
                 for (int x = 0; x < width; ++x)
                 {
-                    tiles[x, y].texture = texture;
+                    char c = lines[y][x];
+                    tiles[x, y].LoadTile(c, textures);
                 }
             }
         }
@@ -46,11 +80,7 @@ namespace LD48
             {
                 for (int x = 0; x < width; ++x)
                 {
-                    //checkerboard (just drawing half the tiles)
-                    if ((x + y) % 2 == 0)
-                    {
-                        tiles[x, y].Draw(gameTime, spriteBatch);
-                    }
+                    tiles[x, y].Draw(gameTime, spriteBatch);
                 }
             }
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -71,8 +73,9 @@ namespace LD48
             // TODO: use this.Content to load your game content here
 
             //load tiles
-            var tileTexture = Content.Load<Texture2D>("tile");
-            tileSet.LoadTiles(tileTexture);
+            string levelPath = "Content/Levels/level1.txt";
+            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+                tileSet.LoadTiles(Services, fileStream);
 
             //load entity data
 
