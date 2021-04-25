@@ -108,7 +108,7 @@ namespace LD48
             //update entities
 
             //update player
-            player.Update(gameTime, keyboardState, gameScreenSize);
+            player.Update(gameTime, keyboardState, gameScreenSize, tileSet);
             dog.Update(gameTime, player);
 
             base.Update(gameTime);

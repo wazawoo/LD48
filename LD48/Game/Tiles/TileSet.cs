@@ -90,6 +90,7 @@ namespace LD48
             var x = (xFloat / 10);
             var y = (yFloat / 10);
             if (y > 23) { return TileType.Air;  }
+            if (x > 31) { return TileType.Air; }
             var tile = tiles[(int)x, (int)y];
             return tile.type;
         }
