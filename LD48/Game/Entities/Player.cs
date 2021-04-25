@@ -148,7 +148,10 @@ namespace LD48
             var collidable = checkIfCollidable(tileSet, position, Direction.Down);
             if (!collidable) {
                 position.Y += 1;
-            } 
+            } else
+            {
+                isOnGround = true;
+            }
         }
     }
 }
