@@ -78,38 +78,31 @@ namespace LD48
             var width = gameScreenSize.X;
             var height = gameScreenSize.Y;
 
-            // restrict to bounds
-
             //allow continuing to the other side
             if (position.X > width)
             {
-                //amount we are off screen to the right
-                var dx = position.X - width;
-
                 //wrap to left side
+                var dx = position.X - width;
                 position.X = dx;
             }
             else if (position.X < 0)
             {
-                //amount we are off screen to the left
-                var dx = -position.X;
-
                 //wrap to right side
+                var dx = -position.X;
                 position.X = width - dx;
             }
 
-            if (position.Y >= height - texture.Height / 2)
+            if (position.Y > height)
             {
-                //bottom
-                position.Y = height - texture.Height / 2;
-                // right now this will always be true until we add collision
-                // checking.
-                isOnGround = true;
+                //fall through
+                var dy = position.Y - height;
+                position.Y = dy;
             }
-            else if (position.Y < texture.Height / 2)
+            else if (position.Y < 0)
             {
-                //top
-                position.Y = texture.Height / 2;
+                //jump through the top
+                var dy = -position.Y;
+                position.Y = height - dy;
             } 
 
         }
