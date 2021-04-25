@@ -8,143 +8,75 @@ namespace LD48
     public class Player: Entity
     {
         public JumpPhysics jump;
-        public bool isOnGround;
 
         public Player(
             Vector2 position,
-            float speed)
-            : base(position, speed)
+            Vector2 size,
+            float movementAcceleration,
+            Gravity gravity)
+            : base(position, size, movementAcceleration, gravity)
         {
-            isOnGround = false;
-            jump = new JumpPhysics();
+            jump = new JumpPhysics(new Vector2(0, -5 * movementAcceleration));
+
+            velocity = new Vector2(0, 0);
+            acceleration = new Vector2(0, 0);            
         }
 
-        public enum Direction
+        void ProcessInput(GameTime gameTime, KeyboardState keyboardState)
         {
-            Up = 0,
-            Right = 1,
-            Down = 2,
-            Left = 3
-        }
-
-        public void Update(GameTime gameTime, KeyboardState keyboardState, Vector2 gameScreenSize, TileSet tileSet) {
-            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
-            ApplyPhysics(gameTime, tileSet);
-            
+            var dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                //position.Y -= speed * dt;
+                //...
             }
 
             if (keyboardState.IsKeyDown(Keys.Down))
             {
-                
-                //position.Y += speed * dt;
+                //...
             }
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                var collidable = checkIfCollidable(tileSet, position, Direction.Left);
-                if (!collidable)
-                {
-                    position.X -= speed * dt;
-                }
+                velocity.X -= movementAcceleration * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Right))
             {
-                var collidable = checkIfCollidable(tileSet, position, Direction.Right);
-                if (!collidable)
-                {
-                    position.X += speed * dt;
-                }
+                velocity.X += movementAcceleration * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                if (isOnGround) {
-                    var collidable = checkIfCollidable(tileSet, position, Direction.Up);
-                    if (!collidable)
-                    {
-                        position.Y -= jump.getJumpY();
-                        jump.start();
-                    }
+                if (tileStandingOn != null & !jump.isCharging)
+                {
+                    //if not in the middle of jumping:
+                    //start charging jump, record the time
+                    //only allow charging while on the ground
+                    jump.isCharging = true;
+                    jump.chargeStartTime = gameTime.TotalGameTime;
                 }
             }
 
-            var width = gameScreenSize.X;
-            var height = gameScreenSize.Y;
-
-            //allow continuing to the other side
-            if (position.X > width)
+            if (keyboardState.IsKeyUp(Keys.Space))
             {
-                //wrap to left side
-                var dx = position.X - width;
-                position.X = dx;
+                //if lift up jump key during charging, start the jump
+                if (jump.isCharging)
+                {
+                    jump.isCharging = false;
+                    velocity += jump.ActualVelocity(gameTime) * dt;
+                }
             }
-            else if (position.X < 0)
-            {
-                //wrap to right side
-                var dx = -position.X;
-                position.X = width - dx;
-            }
-
-            if (position.Y > height)
-            {
-                //fall through
-                var dy = position.Y - height;
-                position.Y = dy;
-            }
-            else if (position.Y < 0)
-            {
-                //jump through the top
-                var dy = -position.Y;
-                position.Y = height - dy;
-            } 
-
         }
-        public bool checkIfCollidable(TileSet tileSet, Vector2 position, Direction direction)
+
+        public override void Update(GameTime gameTime, Vector2 gameScreenSize, KeyboardState keyboardState, TileSet tileSet)
         {
+            //process input before doing standard entity stuff
+            //could allow entities to respond to input as well
 
-            var allTiles = tileSet.tiles;
+            ProcessInput(gameTime, keyboardState);
 
-            // Get players position
-            var playerPositionX = position.X;
-            var playerPositionY = position.Y;
-
-            // Get coordinate of next direction
-            if (direction == Direction.Up)      { playerPositionY = position.Y - 5;}
-            if (direction == Direction.Down)    { playerPositionY = position.Y + 5; }
-            if (direction == Direction.Left)    { playerPositionX = position.X - 5; }
-            if (direction == Direction.Right)   { playerPositionX = position.X + 5; }
-
-            // Get the tile type of the next coordinate
-            var x = (playerPositionX);
-            var y = (playerPositionY);
-            var type = tileSet.getType(x, y);
-
-            if (type == TileType.Ground)
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
-
-        public void ApplyPhysics(GameTime gameTime, TileSet tileSet) {
-            // TODO: Make better
-            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            var collidable = checkIfCollidable(tileSet, position, Direction.Down);
-            if (!collidable) {
-                position.Y += 1;
-            } else
-            {
-                isOnGround = true;
-            }
+            base.Update(gameTime, gameScreenSize, keyboardState, tileSet);
         }
     }
 }

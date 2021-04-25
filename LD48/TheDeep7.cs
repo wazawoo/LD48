@@ -61,7 +61,12 @@ namespace LD48
                     gameScreenSize.X / 2,
                     gameScreenSize.Y / 2
                     ),
-                speed: 100f
+                size: tileSize,
+                movementAcceleration: 50f,
+                gravity: new Gravity(
+                    value: new Vector2(0, 1),
+                    isActive: true
+                    )
                 );
 
             dog = new Dog(
@@ -69,7 +74,13 @@ namespace LD48
                     gameScreenSize.X / 2,
                     gameScreenSize.Y - 5
                     ),
-                speed: 30f
+                size: tileSize,
+                movementAcceleration: 20f,
+                gravity: new Gravity(
+                    value: new Vector2(0, 1),
+                    isActive: true
+                    ),
+                owner: player
                 );
 
             base.Initialize();
@@ -108,8 +119,8 @@ namespace LD48
             //update entities
 
             //update player
-            player.Update(gameTime, keyboardState, gameScreenSize, tileSet);
-            dog.Update(gameTime, player);
+            player.Update(gameTime, gameScreenSize, keyboardState, tileSet);
+            dog.Update(gameTime, gameScreenSize, keyboardState, tileSet);
 
             base.Update(gameTime);
         }

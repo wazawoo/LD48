@@ -10,6 +10,7 @@ namespace LD48
 {
     public class TileSet
     {
+        public Vector2 tileSize;
         int width;
         int height;
         public Tile[,] tiles;
@@ -19,6 +20,7 @@ namespace LD48
             int width,
             int height)
         {
+            this.tileSize = tileSize;
             this.width = width;
             this.height = height;
 
@@ -27,6 +29,7 @@ namespace LD48
             {
                 for (int x = 0; x < width; ++x)
                 {
+                    //top left corner
                     var position = new Vector2(x * tileSize.X, y * tileSize.Y);
                     tiles[x, y] = new Tile(position: position);
                 }
@@ -85,14 +88,16 @@ namespace LD48
             }
         }
 
-        public TileType getType(float xFloat, float yFloat)
+        public Tile GetTile(float xFloat, float yFloat)
         {
-            var x = (xFloat / 10);
-            var y = (yFloat / 10);
-            if (y > 23) { return TileType.Air;  }
-            if (x > 31) { return TileType.Air; }
-            var tile = tiles[(int)x, (int)y];
-            return tile.type;
+            int x = (int) (xFloat / tileSize.X);
+            int y = (int) (yFloat / tileSize.Y);
+
+            //check the correct tile, even if wrapping around
+            x = MathUtil.Mod(x, width);
+            y = MathUtil.Mod(y, height);
+
+            return tiles[x, y];
         }
     }
 }

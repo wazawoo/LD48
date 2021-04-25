@@ -24,6 +24,17 @@ namespace LD48
             this.position = position;
         }
 
+        public float Friction() {
+            //this is the amount of velocity removed from your movement when standing on this tile
+            //currently it does not apply if you are floating though this tile
+            return type switch
+            {
+                TileType.Air => 0f,
+                TileType.Ground => 20f,
+                _ => 0f,
+            };
+        }
+
         public void LoadTile(char c, Texture2D[] textures) {
             switch (c)
             {

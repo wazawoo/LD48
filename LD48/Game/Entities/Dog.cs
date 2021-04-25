@@ -7,27 +7,36 @@ namespace LD48
 {
     public class Dog : Entity
     {
+        Player owner;
 
         public Dog (
             Vector2 position,
-            float speed)
-            : base(position, speed)
+            Vector2 size,
+            float movementAcceleration,
+            Gravity gravity,
+            Player owner)
+            : base(position, size, movementAcceleration, gravity)
         {
-//
+            //dog do not exist without owner
+            this.owner = owner;
         }
 
-        public void Update(GameTime gameTime, Player owner) {
-            if (position.X < (owner.position.X - 10)) {
-                position.X += (float) 1;
-            } else if (position.X > owner.position.X + 10)
+        public override void Update(GameTime gameTime, Vector2 gameScreenSize, KeyboardState keyboardState, TileSet tileSet)
+        {
+            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //decide on dog movement
+            if (position.X < (owner.position.X - owner.size.X))
             {
-                position.X -= (float) 1;
+                acceleration.X = 3 * movementAcceleration * dt;
+            }
+            else if (position.X > owner.position.X + owner.size.X)
+            {
+                acceleration.X = -3 * movementAcceleration * dt;
             }
 
-            //test: round to nearest pixel
-            position.X = (float)Math.Round(position.X);
-            position.Y = (float)Math.Round(position.Y);
-        }    
+            base.Update(gameTime, gameScreenSize, keyboardState, tileSet);
+        }
     }
 }
 
