@@ -15,6 +15,7 @@ namespace LD48
 
         //entities
         Player player;
+        Dog dog;
 
         TileSet tileSet;
 
@@ -61,6 +62,14 @@ namespace LD48
                 speed: 50f
                 );
 
+            dog = new Dog(
+                    position: new Vector2(
+                    gameScreenSize.X / 2,
+                    gameScreenSize.Y - 5
+                    ),
+                speed: 30f
+                );
+
             base.Initialize();
         }
 
@@ -78,6 +87,7 @@ namespace LD48
 
             //load player data
             player.texture = Content.Load<Texture2D>("player");
+            dog.texture = Content.Load<Texture2D>("pet-alien");
         }
 
         protected override void Update(GameTime gameTime)
@@ -96,6 +106,7 @@ namespace LD48
 
             //update player
             player.Update(gameTime, keyboardState, gameScreenSize);
+            dog.Update(gameTime, player);
 
             base.Update(gameTime);
         }
@@ -123,6 +134,7 @@ namespace LD48
 
             //draw player
             player.Draw(gameTime, spriteBatch);
+            dog.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 
