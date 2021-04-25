@@ -19,7 +19,7 @@ namespace LD48
             this.speed = speed;
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 gameScreenSize)
         {
             if (texture != null) {
                 spriteBatch.Draw(
@@ -33,6 +33,33 @@ namespace LD48
                     SpriteEffects.None,
                     0f
                 );
+
+                //draw another copy one width to the right
+                spriteBatch.Draw(
+                    texture,
+                    new Vector2(position.X + gameScreenSize.X, position.Y),
+                    null,
+                    Color.White,
+                    0f,
+                    new Vector2(texture.Width / 2, texture.Height / 2),
+                    Vector2.One,
+                    SpriteEffects.None,
+                    0f
+                );
+
+                //draw another copy one width to the right
+                spriteBatch.Draw(
+                    texture,
+                    new Vector2(position.X - gameScreenSize.X, position.Y),
+                    null,
+                    Color.White,
+                    0f,
+                    new Vector2(texture.Width / 2, texture.Height / 2),
+                    Vector2.One,
+                    SpriteEffects.None,
+                    0f
+                );
+
             }
         }
     }

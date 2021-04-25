@@ -136,8 +136,8 @@ namespace LD48
             //draw entities
 
             //draw player
-            player.Draw(gameTime, spriteBatch);
-            dog.Draw(gameTime, spriteBatch);
+            player.Draw(gameTime, spriteBatch, gameScreenSize);
+            dog.Draw(gameTime, spriteBatch, gameScreenSize);
 
             spriteBatch.End();
 

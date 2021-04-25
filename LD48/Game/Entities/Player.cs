@@ -60,20 +60,20 @@ namespace LD48
             // restrict to bounds
 
             //allow continuing to the other side
-            if (position.X > width - texture.Width / 2)
+            if (position.X > width)
             {
-                //amount we are off screen
-                var dx = position.X - (width - texture.Width / 2);
+                //amount we are off screen to the right
+                var dx = position.X - width;
 
-                //right
+                //wrap to left side
                 position.X = dx;
             }
-            else if (position.X < texture.Width / 2)
+            else if (position.X < 0)
             {
-                //amount we are off screen
-                var dx = texture.Width / 2 - position.X;
+                //amount we are off screen to the left
+                var dx = -position.X;
 
-                //left
+                //wrap to right side
                 position.X = width - dx;
             }
 
