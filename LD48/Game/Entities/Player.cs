@@ -119,10 +119,13 @@ namespace LD48
             }
         }
 
-        public void ApplyPhysics(GameTime gameTime) {
+        public void ApplyPhysics(GameTime gameTime, TileSet tileSet) {
             // TODO: Make better
             var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position.Y += 1;
+            var collidable = checkIfCollidable(tileSet, position, Direction.Down);
+            if (!collidable) {
+                position.Y += 1;
+            } 
         }
     }
 }
