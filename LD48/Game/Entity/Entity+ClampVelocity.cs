@@ -14,8 +14,8 @@ namespace LD48
             //only limit downward velocity (terminal velocity)
             velocity.Y = Math.Min(velocity.Y, 5);
 
-            //limit maximum horizontal speed
-            velocity.X = Math.Clamp(velocity.X, -4, 4);
+            //limit maximum horizontal speed    
+            velocity.X = Math.Clamp(velocity.X, -2, 2);
         }
     }
 }

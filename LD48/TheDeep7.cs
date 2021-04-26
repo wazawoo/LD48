@@ -88,7 +88,7 @@ namespace LD48
 
             player.behaviors.Add(
                 new Move(
-                    lateralAcceleration: 50f,
+                    lateralAcceleration: 16f,
                     owner: player,
                     enabled: true));
 
@@ -113,7 +113,7 @@ namespace LD48
             dog.behaviors.Add(
                 new Follow(
                     target: player,
-                    lateralAcceleration: 30f,
+                    lateralAcceleration: 5f,
                     owner: dog,
                     enabled: true));
 

@@ -44,6 +44,19 @@ namespace LD48
                 owner.velocity.X += lateralAcceleration * dt;
             }
 
+
+            //alternative to friction:
+            //if not pressing a movement key, and on the ground, stop immediately
+            //this feels more like celeste/towerfall
+            if (keyboardState.IsKeyUp(Keys.Right) && keyboardState.IsKeyUp(Keys.Left))
+            {
+                //if not trying to move and on ground, reset velocity
+                if (owner.tileStandingOn != null && owner.tileStandingOn.type == TileType.Ground)
+                {
+                    owner.velocity.X = 0f;
+                }
+            }
+
             base.Update(gameTime, keyboardState);
         }
     }

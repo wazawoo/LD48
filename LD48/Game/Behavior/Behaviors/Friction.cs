@@ -18,20 +18,25 @@ namespace LD48
         {
             var dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-            //apply friction if entity is standing on a tile
-            //move opposite the velocity
-            if (owner.tileStandingOn != null)
-            {
-                var oldSign = Math.Sign(owner.velocity.X);
-                owner.velocity.X -= oldSign * owner.tileStandingOn.Friction() * dt;
-                var newSign = Math.Sign(owner.velocity.X);
+            //disabling friction for a moment
+            //i dont like how it feels
+            //it causes movement to be slower on the ground than in the air
+            //i dont know that it should work that way
 
-                if (oldSign != newSign)
-                {
-                    //if friction causes velocity to cross zero, put it back to zero
-                    owner.velocity.X = 0f;
-                }
-            }
+            ////apply friction if entity is standing on a tile
+            ////move opposite the velocity
+            //if (owner.tileStandingOn != null)
+            //{
+            //    var oldSign = Math.Sign(owner.velocity.X);
+            //    owner.velocity.X -= oldSign * owner.tileStandingOn.Friction() * dt;
+            //    var newSign = Math.Sign(owner.velocity.X);
+
+            //    if (oldSign != newSign)
+            //    {
+            //        //if friction causes velocity to cross zero, put it back to zero
+            //        owner.velocity.X = 0f;
+            //    }
+            //}
 
             base.Update(gameTime, keyboardState);
         }
