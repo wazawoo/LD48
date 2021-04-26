@@ -30,7 +30,7 @@ namespace LD48
             return type switch
             {
                 TileType.Air => 0f,
-                TileType.Ground => 20f,
+                TileType.Ground => 70f,
                 _ => 0f,
             };
         }

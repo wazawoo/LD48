@@ -29,9 +29,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Util\" />
-    <Folder Include="Game\Entities\" />
     <Folder Include="Game\Tiles\" />
-    <Folder Include="Game\Physics\" />
     <Folder Include="Content\Levels\" />
+    <Folder Include="Game\Entity\" />
+    <Folder Include="Game\Entity\Entities\" />
+    <Folder Include="Game\Behavior\" />
+    <Folder Include="Game\Behavior\Behaviors\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -55,33 +56,66 @@ namespace LD48
 
             tileSet = new TileSet(tileSize, width, height);
 
-            //player init
             player = new Player(
                 position: new Vector2(
                     gameScreenSize.X / 2,
-                    gameScreenSize.Y / 2
-                    ),
-                size: tileSize,
-                movementAcceleration: 50f,
-                gravity: new Gravity(
-                    value: new Vector2(0, 1),
-                    isActive: true
-                    )
-                );
+                    gameScreenSize.Y / 2),
+                size: tileSize);
 
             dog = new Dog(
-                    position: new Vector2(
+                position: new Vector2(
                     gameScreenSize.X / 2,
-                    gameScreenSize.Y - 5
-                    ),
-                size: tileSize,
-                movementAcceleration: 20f,
-                gravity: new Gravity(
-                    value: new Vector2(0, 1),
-                    isActive: true
-                    ),
-                owner: player
-                );
+                    gameScreenSize.Y - 5),
+                size: tileSize);
+
+            //need a cleaner way to add behaviors
+            //also, should be able to add a behavior without needing to specify owner
+            //owner should always be the class that the behaviors are being added to
+            //maybe behaviors cant be edited directly
+            //and put an add behavior function in the entity class?
+
+            //player behaviors
+            player.behaviors.Add(
+                new Gravity(
+                    acceleration: new Vector2(0, 10),
+                    owner: player,
+                    enabled: true));
+
+            player.behaviors.Add(
+                new Friction(
+                    owner: player,
+                    enabled: true));
+
+            player.behaviors.Add(
+                new Move(
+                    lateralAcceleration: 50f,
+                    owner: player,
+                    enabled: true));
+
+            player.behaviors.Add(
+                new Jump(
+                    velocity: new Vector2(0, -150),
+                    owner: player,
+                    enabled: true));
+
+            //dog behaviors
+            dog.behaviors.Add(
+                new Gravity(
+                    acceleration: new Vector2(0, 10),
+                    owner: dog,
+                    enabled: true));
+
+            dog.behaviors.Add(
+                new Friction(
+                    owner: dog,
+                    enabled: true));
+
+            dog.behaviors.Add(
+                new Follow(
+                    target: player,
+                    lateralAcceleration: 30f,
+                    owner: dog,
+                    enabled: true));
 
             base.Initialize();
         }
