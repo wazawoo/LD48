@@ -36,6 +36,12 @@ namespace LD48
             }
         }
 
+        enum TileSprite
+        {
+            BgGrayStone = 0,
+            FgDarkBlue = 1
+        }
+
         public void LoadTiles(
             IServiceProvider serviceProvider,
             Stream fileStream)
@@ -60,9 +66,10 @@ namespace LD48
 
             //only load tile textures once
             var textures = new Texture2D[2];
+
             for (int i = 0; i < textures.Length; ++i)
             {
-                string path = String.Format("Tiles/tile{0}", i + 1);
+                String path = getTilePath(i);
                 textures[i] = content.Load<Texture2D>(path);
             }
 
@@ -98,6 +105,22 @@ namespace LD48
             y = MathUtil.Mod(y, height);
 
             return tiles[x, y];
+        }
+
+        public string getTilePath(int i)
+        {
+            var tileName = "";
+
+            if ((int)TileSprite.BgGrayStone == i)
+            {
+                tileName = "bg_tile";
+            }
+            else // if (TileSprite.FgDarkBlue.Equals(i))
+            {
+                tileName = "tile1";
+            } 
+
+            return String.Format("Tiles/{0}", tileName);
         }
     }
 }

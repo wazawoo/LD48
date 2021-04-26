@@ -14,7 +14,7 @@ namespace LD48
             float lateralAcceleration,
             Entity owner,
             bool enabled)
-            : base(owner, enabled)
+            : base(owner, enabled, "follow")
         {
             this.target = target;
             this.lateralAcceleration = lateralAcceleration;

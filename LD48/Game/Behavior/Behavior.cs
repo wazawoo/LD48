@@ -8,11 +8,12 @@ namespace LD48
     {
         public Entity owner { get; set; }
         public bool enabled { get; set; }
-
-        public Behavior(Entity owner, bool enabled)
+        public String identifier {get; }
+        public Behavior(Entity owner, bool enabled, String identifier)
         {
             this.owner = owner;
             this.enabled = enabled;
+            this.identifier = identifier;
         }
 
         public virtual void Update(GameTime gameTime, KeyboardState keyboardState)
