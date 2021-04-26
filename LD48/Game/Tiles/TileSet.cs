@@ -65,11 +65,11 @@ namespace LD48
                 throw new Exception(String.Format("Got {0} lines, expected {1}", lines.Count, height));
 
             //only load tile textures once
-            var textures = new Texture2D[2];
+            var textures = new Texture2D[Enum.GetNames(typeof(TileSprite)).Length];
 
             for (int i = 0; i < textures.Length; ++i)
             {
-                String path = getTilePath(i);
+                String path = GetTilePath(i);
                 textures[i] = content.Load<Texture2D>(path);
             }
 
@@ -107,18 +107,14 @@ namespace LD48
             return tiles[x, y];
         }
 
-        public string getTilePath(int i)
+        public string GetTilePath(int i)
         {
-            var tileName = "";
-
-            if ((int)TileSprite.BgGrayStone == i)
+            string tileName = i switch
             {
-                tileName = "bg_tile";
-            }
-            else // if (TileSprite.FgDarkBlue.Equals(i))
-            {
-                tileName = "tile1";
-            } 
+                (int)TileSprite.BgGrayStone => "bg_tile",
+                (int)TileSprite.FgDarkBlue => "tile1",
+                _ => throw new NotSupportedException(String.Format("Unsupported tile sprite '{0}'", i)),
+            };
 
             return String.Format("Tiles/{0}", tileName);
         }

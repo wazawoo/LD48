@@ -24,24 +24,11 @@ namespace LD48
             Vector2 velocity,
             Entity owner,
             bool enabled)
-            : base (owner, enabled, "jump")
+            : base (owner, enabled, BehaviorType.Jump)
         {
             this.velocity = velocity;
             chargeStartTime = TimeSpan.MinValue;
             state = JumpState.Ready;
-        }
-
-        public void forceJump(GameTime gameTime)
-        {
-            var dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            dt = (float)1;
-            //I NEED A WAY TO ADJUST THESE CONSTANTS LIVE
-            var chargingTime = .1;// (float)(gameTime.TotalGameTime - chargeStartTime).TotalSeconds;
-            var maxChargeDuration = 0.105f;
-            float jumpCharge = .1f; //* Math.Clamp(chargingTime, 0.07f, maxChargeDuration);
-
-            state = JumpState.Used;
-            owner.velocity +=  velocity * jumpCharge * dt;
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)

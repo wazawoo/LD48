@@ -4,16 +4,26 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LD48
 {
+    public enum BehaviorType
+    {
+        Follow = 0,
+        Friction = 1,
+        Gravity = 2,
+        Jump = 3,
+        Move = 4
+    }
+
     public class Behavior
     {
-        public Entity owner { get; set; }
-        public bool enabled { get; set; }
-        public String identifier {get; }
-        public Behavior(Entity owner, bool enabled, String identifier)
+        public Entity owner;
+        public bool enabled;
+        public readonly BehaviorType type;
+
+        public Behavior(Entity owner, bool enabled, BehaviorType type)
         {
             this.owner = owner;
             this.enabled = enabled;
-            this.identifier = identifier;
+            this.type = type;
         }
 
         public virtual void Update(GameTime gameTime, KeyboardState keyboardState)

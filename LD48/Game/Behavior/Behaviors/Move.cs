@@ -12,7 +12,7 @@ namespace LD48
             float lateralAcceleration,
             Entity owner,
             bool enabled)
-            : base(owner, enabled, "move")
+            : base(owner, enabled, BehaviorType.Move)
         {
             this.lateralAcceleration = lateralAcceleration;
         }

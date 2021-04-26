@@ -14,7 +14,7 @@ namespace LD48
             float lateralAcceleration,
             Entity owner,
             bool enabled)
-            : base(owner, enabled, "follow")
+            : base(owner, enabled, BehaviorType.Follow)
         {
             this.target = target;
             this.lateralAcceleration = lateralAcceleration;

@@ -13,7 +13,7 @@ namespace LD48
             Vector2 acceleration,
             Entity owner,
             bool enabled)
-            : base(owner, enabled, "gravity")
+            : base(owner, enabled, BehaviorType.Gravity)
         {
             this.acceleration = acceleration;
         }
