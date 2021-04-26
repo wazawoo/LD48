@@ -134,7 +134,7 @@ namespace LD48
             //load entity data
 
             //load player data
-            player.texture = Content.Load<Texture2D>("player");
+            player.texture = Content.Load<Texture2D>("player-standing-forward");
             dog.texture = Content.Load<Texture2D>("pet-alien");
         }
 
