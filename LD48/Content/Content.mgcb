@@ -15,6 +15,7 @@
 
 #begin Levels/level1.txt
 /copy:Levels/level1.txt
+
 #begin Pet-Alien.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -50,6 +51,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:player-standing-forward.png
+
+#begin player-standing-forward-sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:player-standing-forward-sheet.png
 
 #begin Tiles/bg_tile.png
 /importer:TextureImporter
