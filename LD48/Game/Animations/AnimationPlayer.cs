@@ -21,10 +21,9 @@ namespace LD48
             get { return frameIndex; }
         }
 
-        /// Bottom center of each frame.
         public Vector2 Origin
         {
-            get { return new Vector2(Animation.FrameWidth / 2.0f, Animation.FrameHeight); }
+            get { return new Vector2(0,0); }
         }
 
         public void PlayAnimation(Animation animation)
