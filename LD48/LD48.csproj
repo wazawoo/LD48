@@ -35,5 +35,6 @@
     <Folder Include="Game\Entity\Entities\" />
     <Folder Include="Game\Behavior\" />
     <Folder Include="Game\Behavior\Behaviors\" />
+    <Folder Include="Game\Animations\" />
   </ItemGroup>
 </Project>
