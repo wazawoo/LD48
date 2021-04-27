@@ -9,9 +9,12 @@ namespace LD48
         //jump velocity
         //a jump just increases the velocity instantaneously for now
         public Vector2 velocity;
+        public bool playerControlled;
 
         public TimeSpan chargeStartTime;
         private JumpState state;
+
+        public bool forceJump = false;
 
         enum JumpState
         {
@@ -22,10 +25,13 @@ namespace LD48
 
         public Jump(
             Vector2 velocity,
+            bool playerControlled,
             bool enabled = true)
             : base (BehaviorType.Jump, enabled)
         {
             this.velocity = velocity;
+            this.playerControlled = playerControlled;
+
             chargeStartTime = TimeSpan.MinValue;
             state = JumpState.Ready;
         }
@@ -38,8 +44,14 @@ namespace LD48
             {
                 case JumpState.Ready:
 
-                    if (keyboardState.IsKeyDown(Keys.Space))
+                    if ((playerControlled && keyboardState.IsKeyDown(Keys.Space))
+                        || forceJump)
                     {
+                        if (forceJump)
+                        {
+                            forceJump = false;
+                        }
+
                         if (owner.tileStandingOn != null)
                         {
                             //if not in the middle of jumping:
@@ -58,7 +70,8 @@ namespace LD48
                     var chargingTime = (float)(gameTime.TotalGameTime - chargeStartTime).TotalSeconds;
                     var maxChargeDuration = 0.105f;
 
-                    if (keyboardState.IsKeyUp(Keys.Space) || chargingTime >= maxChargeDuration)
+                    if ((playerControlled && keyboardState.IsKeyUp(Keys.Space))
+                        || chargingTime >= maxChargeDuration)
                     {
                         //if lift key or exceed maximum charge duration, jump
                         float jumpCharge = 15 * Math.Clamp(chargingTime, 0.07f, maxChargeDuration);
@@ -70,8 +83,8 @@ namespace LD48
 
                 case JumpState.Used:
                     //how do we get back to idle?
-                    //we have the key lifted
-                    if (keyboardState.IsKeyUp(Keys.Space))
+                    //we get back to the ground
+                    if (owner.tileStandingOn?.type == TileType.Ground)
                     {
                         state = JumpState.Ready;
                     }

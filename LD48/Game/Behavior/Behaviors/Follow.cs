@@ -34,6 +34,15 @@ namespace LD48
                 owner.velocity.X -= lateralAcceleration * dt;
             }
 
+            if (owner.position.Y > target.position.Y)
+            {
+                //force jump if this entity has jump
+                if (owner.GetBehavior(BehaviorType.Jump) is Jump jump)
+                {
+                    jump.forceJump = true;
+                }
+            }
+
             base.Update(gameTime, keyboardState);
         }
     }

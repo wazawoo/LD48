@@ -88,6 +88,7 @@ namespace LD48
 
             player.AddBehavior(
                 new Jump(
+                    playerControlled: true,
                     velocity: new Vector2(0, -150)));
 
             //dog behaviors
@@ -102,6 +103,11 @@ namespace LD48
                 new Follow(
                     target: player,
                     lateralAcceleration: 5f));
+
+            dog.AddBehavior(
+                new Jump(
+                    playerControlled: false,
+                    velocity: new Vector2(0, -150)));
 
             base.Initialize();
         }
