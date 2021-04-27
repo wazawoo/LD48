@@ -22,9 +22,8 @@ namespace LD48
 
         public Jump(
             Vector2 velocity,
-            Entity owner,
-            bool enabled)
-            : base (owner, enabled, BehaviorType.Jump)
+            bool enabled = true)
+            : base (BehaviorType.Jump, enabled)
         {
             this.velocity = velocity;
             chargeStartTime = TimeSpan.MinValue;

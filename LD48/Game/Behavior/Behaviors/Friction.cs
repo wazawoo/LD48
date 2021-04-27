@@ -6,8 +6,9 @@ namespace LD48
 {
     public class Friction: Behavior
     {
-        public Friction(Entity owner, bool enabled)
-            : base(owner, enabled, BehaviorType.Friction)
+        public Friction(
+            bool enabled = true)
+            : base(BehaviorType.Friction, enabled)
         {
         }
 

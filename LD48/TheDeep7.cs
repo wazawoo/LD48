@@ -75,47 +75,33 @@ namespace LD48
             //and put an add behavior function in the entity class?
 
             //player behaviors
-            player.behaviors.Add(
+            player.AddBehavior(
                 new Gravity(
-                    acceleration: new Vector2(0, 10),
-                    owner: player,
-                    enabled: true));
+                    acceleration: new Vector2(0, 10)));
 
-            player.behaviors.Add(
-                new Friction(
-                    owner: player,
-                    enabled: true));
+            player.AddBehavior(
+                new Friction());
 
-            player.behaviors.Add(
+            player.AddBehavior(
                 new Move(
-                    lateralAcceleration: 16f,
-                    owner: player,
-                    enabled: true));
+                    lateralAcceleration: 16f));
 
-            player.behaviors.Add(
+            player.AddBehavior(
                 new Jump(
-                    velocity: new Vector2(0, -150),
-                    owner: player,
-                    enabled: true));
+                    velocity: new Vector2(0, -150)));
 
             //dog behaviors
-            dog.behaviors.Add(
+            dog.AddBehavior(
                 new Gravity(
-                    acceleration: new Vector2(0, 10),
-                    owner: dog,
-                    enabled: true));
+                    acceleration: new Vector2(0, 10)));
 
-            dog.behaviors.Add(
-                new Friction(
-                    owner: dog,
-                    enabled: true));
+            dog.AddBehavior(
+                new Friction());
 
-            dog.behaviors.Add(
+            dog.AddBehavior(
                 new Follow(
                     target: player,
-                    lateralAcceleration: 5f,
-                    owner: dog,
-                    enabled: true));
+                    lateralAcceleration: 5f));
 
             base.Initialize();
         }

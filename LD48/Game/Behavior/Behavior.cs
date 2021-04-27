@@ -15,13 +15,16 @@ namespace LD48
 
     public class Behavior
     {
+        //this is set in Entity.AddBehavior
         public Entity owner;
+
         public bool enabled;
         public readonly BehaviorType type;
 
-        public Behavior(Entity owner, bool enabled, BehaviorType type)
+        public Behavior(
+            BehaviorType type,
+            bool enabled = true)
         {
-            this.owner = owner;
             this.enabled = enabled;
             this.type = type;
         }

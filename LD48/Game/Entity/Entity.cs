@@ -20,7 +20,9 @@ namespace LD48
         public Vector2 velocity;
         public Tile tileStandingOn;
 
-        public List<Behavior> behaviors = new List<Behavior>();
+        //dont allow direct modification of behaviors
+        //see Entity+Behaviors.cs for modifying this list
+        private List<Behavior> behaviors = new List<Behavior>();
 
         public Entity(
             Vector2 position,
@@ -46,6 +48,9 @@ namespace LD48
             //i dont want the order of these to be inconsistent between entities
             //they can have a precedence thing
             //but really, which ones are dependent on each other?
+
+            //should be able to define an order using behavior types
+            //and enforce the order when adding behaviors
 
             foreach (Behavior behavior in behaviors)
             {
