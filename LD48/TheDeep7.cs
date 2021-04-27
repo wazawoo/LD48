@@ -126,7 +126,8 @@ namespace LD48
             //load entity data
 
             //load player data
-            player.texture = Content.Load<Texture2D>("player-standing-forward");
+            //player.texture = Content.Load<Texture2D>("player-standing-forward");
+            player.LoadContent(this.Content);
             dog.texture = Content.Load<Texture2D>("pet-alien");
         }
 
@@ -173,7 +174,8 @@ namespace LD48
             //draw entities
 
             //draw player
-            player.Draw(gameTime, spriteBatch, gameScreenSize);
+            //player.Draw(gameTime, spriteBatch, gameScreenSize);
+            player.drawAnimation(gameTime, spriteBatch, SpriteEffects.None);
             dog.Draw(gameTime, spriteBatch, gameScreenSize);
 
             spriteBatch.End();
