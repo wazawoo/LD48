@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace LD48.Game.Animations
+namespace LD48
 {
     public class Animation
     {
