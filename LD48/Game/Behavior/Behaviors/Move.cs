@@ -7,6 +7,7 @@ namespace LD48
     public class Move: Behavior
     {
         public float lateralAcceleration;
+        private float initialAcceleration;
 
         public Move(
             float lateralAcceleration,
@@ -14,6 +15,7 @@ namespace LD48
             : base(BehaviorType.Move, enabled)
         {
             this.lateralAcceleration = lateralAcceleration;
+            this.initialAcceleration = lateralAcceleration;
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)
@@ -35,11 +37,25 @@ namespace LD48
 
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                owner.velocity.X -= lateralAcceleration * dt;
+                //experiment: adjust acceleration with keys instead of velocity
+                if (lateralAcceleration >= 0)
+                {
+                    lateralAcceleration = -initialAcceleration;
+                }
+
+                owner.velocity.X += lateralAcceleration * dt;
+
+                //old:
+                //owner.velocity.X -= lateralAcceleration * dt;
             }
 
             if (keyboardState.IsKeyDown(Keys.Right))
             {
+                if (lateralAcceleration <= 0)
+                {
+                    lateralAcceleration = initialAcceleration;
+                }
+
                 owner.velocity.X += lateralAcceleration * dt;
             }
 
@@ -52,7 +68,10 @@ namespace LD48
                 //if not trying to move and on ground, reset velocity
                 if (owner.tileStandingOn != null && owner.tileStandingOn.type == TileType.Ground)
                 {
-                    owner.velocity.X = 0f;
+                    lateralAcceleration = 0f;
+
+                    //old:
+                    //owner.velocity.X = 0f;
                 }
             }
 
